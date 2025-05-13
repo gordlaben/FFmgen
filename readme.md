@@ -1,13 +1,13 @@
 # FFmgen - The Smart FFmpeg Command Generator 🎬
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue)](https://www.placeholder.com)
-[![Discord](https://img.shields.io/discord/YOUR_SERVER_ID?color=%237289DA&label=Join%20Discord&logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue)](https://gordlaben.github.io/FFmgen/)
+[![Discord](https://img.shields.io/discord/1340492560220684331?color=%237289DA&label=Join%20Discord&logo=discord&logoColor=white)](https://discord.gg/Sp45V5BcxU)
 
 FFmgen is a powerful web-based tool that simplifies the creation of complex FFmpeg commands through an intuitive interface. Whether you're a video professional or just getting started with FFmpeg, this tool helps you build commands without memorizing FFmpeg's extensive options.
 
 ## 🚀 Try It Now
 
-**[Launch FFmgen](https://www.placeholder.com)**
+**[Launch FFmgen](https://gordlaben.github.io/FFmgen/)**
 
 ## ✨ Features
 
@@ -93,6 +93,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 <p align="center">
-  <a href="https://www.placeholder.com">Visit FFmgen</a> |
+  <a href="https://gordlaben.github.io/FFmgen/">Visit FFmgen</a> |
   <a href="https://discord.gg/Sp45V5BcxU">Join Discord</a>
 </p>
