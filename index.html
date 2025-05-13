@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FFmpeg Param Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-dark">
+  <div class="container py-4">
+    <h1 class="display-5 mb-4">FFmgen</h1>
+    
+    <div class="description mb-4">
+      <p class="lead text-light">
+        A powerful FFmpeg command generator that helps you construct complex FFmpeg commands with an easy-to-use interface. 
+        Configure input/output parameters, hardware acceleration, encoding settings, and more without memorizing FFmpeg's extensive command options.
+      </p>
+    </div>
+    
+    <div class="section">
+      <div class="param param-group">
+        <div class="group-header">
+          <strong>Custom Agent or Stream URL</strong>
+          <button class="toggle-options"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="param-options">
+          <div class="option" data-param="-user_agent {userAgent}">
+            <label>User Agent</label>
+            <small>Custom user agent string for the request</small>
+            <input type="text" id="userAgent" data-param-key="userAgent" 
+                   value="VLC/3.0.7 LibVLC/3.0.7" />
+          </div>
+          
+          <div class="option" data-param="-i {streamUrl}">
+            <label>Stream URL</label>
+            <small>Input stream URL to process</small>
+            <input type="text" id="streamUrl" data-param-key="streamUrl" 
+                   value="http://example.com/stream" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Input Parameters</h2>
+      <div class="description mb-4">
+        <p class="lead text-light">
+          Input parameters affect how FFmpeg reads and processes the incoming stream. These settings control hardware acceleration, buffering, error handling, and other input-related behaviors.
+        </p>
+      </div>
+      
+      <div class="param param-group">
+        <div class="group-header">
+          <strong>Hardware Acceleration</strong>
+          <button class="toggle-options"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="param-options">
+          <div class="option" data-param="-hwaccel {type}">
+            <label>Acceleration Type</label>
+            <select id="hwaccel_type" data-param-key="type">
+              <option value="none">None (CPU)</option>
+              <option value="auto">Auto-detect</option>
+              <option value="qsv">Intel QuickSync</option>
+              <option value="d3d11va">DirectX 11 (Windows)</option>
+              <option value="dxva2">DirectX 9 (Windows)</option>
+              <option value="cuda">NVIDIA CUDA</option>
+              <option value="nvdec">NVIDIA NVDEC</option>
+              <option value="amf">AMD AMF</option>
+              <option value="vaapi">VAAPI (Linux)</option>
+              <option value="vdpau">VDPAU (Linux)</option>
+              <option value="videotoolbox">VideoToolbox (macOS)</option>
+              <option value="drm">DRM (Direct Rendering Manager)</option>
+              <option value="opencl">OpenCL</option>
+              <option value="vulkan">Vulkan</option>
+            </select>
+            <small>Hardware acceleration method to use for decoding</small>
+          </div>
+          
+          <div class="option" data-param="-hwaccel_output_format {format}">
+            <label>Output Format:</label>
+            <select id="hwoutput_format" data-param-key="format">
+              <option value="none">None (CPU)</option>
+              <option value="qsv">QSV (Intel QuickSync)</option>
+              <option value="d3d11">DirectX 11</option>
+              <option value="dxva2">DirectX 9</option>
+              <option value="cuda">CUDA (NVIDIA)</option>
+              <option value="nv12">NV12 (NVIDIA)</option>
+              <option value="p010">P010 (10-bit)</option>
+              <option value="vaapi">VAAPI (Linux)</option>
+              <option value="vdpau">VDPAU (Linux)</option>
+              <option value="videotoolbox">VideoToolbox (macOS)</option>
+              <option value="drm">DRM</option>
+              <option value="opencl">OpenCL</option>
+              <option value="vulkan">Vulkan</option>
+            </select>
+            <small>Hardware decoder output format (should match acceleration type)</small>
+          </div>
+          
+          <div class="option" data-param="-hwaccel_device {device}">
+            <label>Device:</label>
+            <input type="text" id="hwdevice_path" data-param-key="device" 
+                   value="/dev/dri/renderD128" />
+            <small>Path to hardware device (if required)</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="param param-group">
+        <div class="group-header">
+          <strong>Input Stream Settings</strong>
+          <button class="toggle-options"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="param-options">
+          <div class="option" data-param="-re">
+            <label>Read at Native Rate</label>
+            <small>Read input at native frame rate</small>
+          </div>
+          
+          <div class="option" data-param="-stream_loop {count}">
+            <label>Stream Loop Count:</label>
+            <input type="number" id="streamcopy_count" data-param-key="count" 
+                   value="-1" min="-1" />
+            <small>Number of times to loop input (-1 for infinite)</small>
+          </div>
+          
+          <div class="option" data-param="-thread_queue_size {size}">
+            <label>Thread Queue Size:</label>
+            <input type="number" id="thread_queue_size" data-param-key="size" 
+                   value="4096" min="0" />
+            <small>Size of thread queue for reading</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="param param-group">
+        <div class="group-header">
+          <strong>Buffer & Probe Settings</strong>
+          <button class="toggle-options"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="param-options">
+          <div class="option" data-param="-analyzeduration {duration}">
+            <label>Analyze Duration (μs):</label>
+            <input type="number" id="analyzeduration_value" data-param-key="duration" 
+                   value="10000000" min="0" />
+            <small>How many microseconds to analyze streams</small>
+          </div>
+          
+          <div class="option" data-param="-probesize {size}">
+            <label>Probe Size:</label>
+            <input type="number" id="probesize_value" data-param-key="size" 
+                   value="10000000" min="0" />
+            <small>Maximum bytes to probe stream</small>
+          </div>
+          
+          <div class="option" data-param="-rtbufsize {size}k">
+            <label>Real-time Buffer Size (KB):</label>
+            <input type="number" id="rtbufsize_value" data-param-key="size" 
+                   value="2048" min="0" />
+            <small>Maximum buffer size for real-time inputs</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="param param-group">
+        <div class="group-header">
+          <strong>Error Handling</strong>
+          <button class="toggle-options"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="param-options">
+          <div class="option" data-param="-reconnect 1">
+            <label>Enable Reconnection</label>
+            <small>Allow reconnection attempts if connection is lost</small>
+          </div>
+
+          <div class="option" data-param="-reconnect_streamed 1">
+            <label>Enable Streamed Reconnection</label>
+            <small>Continue from last position after reconnecting</small>
+          </div>
+          
+          <div class="option" data-param="-reconnect_delay_max {delay}">
+            <label>Max Reconnect Delay:</label>
+            <input type="number" id="reconnect_delay_value" data-param-key="delay" 
+                   value="4294" min="0" />
+            <small>Maximum seconds to wait before reconnecting</small>
+          </div>
+          
+          <div class="option" data-param="-loglevel {level}">
+            <label>Log Level:</label>
+            <select id="loglevel_value" data-param-key="level">
+              <option value="quiet">Quiet</option>
+              <option value="panic">Panic</option>
+              <option value="fatal">Fatal</option>
+              <option value="error">Error</option>
+              <option value="warning">Warning</option>
+              <option value="info">Info</option>
+              <option value="verbose">Verbose</option>
+              <option value="debug">Debug</option>
+              <option value="trace">Trace</option>
+            </select>
+            <small>Logging verbosity level</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Output Parameters</h2>
+      <div class="description mb-4">
+        <p class="lead text-light">
+          Output parameters determine how FFmpeg encodes and formats the output stream. These settings control video/audio codecs, quality, latency, and other output-specific configurations.
+        </p>
+      </div>
+
+      <div class="param param-group">
+        <div class="group-header">
+          <strong>Video Settings</strong>
+          <button class="toggle-options"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="param-options">
+          <div class="option" data-param="-c:v {codec}">
+            <label>Codec:</label>
+            <select id="videoCodec_codec" data-param-key="codec">
+              <option value="copy">Copy (no transcode)</option>
+              
+              <!-- Intel QuickSync -->
+              <optgroup label="Intel QuickSync">
+                <option value="h264_qsv">H.264/AVC (QSV)</option>
+                <option value="hevc_qsv">H.265/HEVC (QSV)</option>
+                <option value="vp9_qsv">VP9 (QSV)</option>
+                <option value="av1_qsv">AV1 (QSV)</option>
+              </optgroup>
+
+              <!-- NVIDIA -->
+              <optgroup label="NVIDIA">
+                <option value="h264_nvenc">H.264/AVC (NVENC)</option>
+                <option value="hevc_nvenc">H.265/HEVC (NVENC)</option>
+                <option value="av1_nvenc">AV1 (NVENC)</option>
+              </optgroup>
+
+              <!-- AMD -->
+              <optgroup label="AMD">
+                <option value="h264_amf">H.264/AVC (AMF)</option>
+                <option value="hevc_amf">H.265/HEVC (AMF)</option>
+                <option value="av1_amf">AV1 (AMF)</option>
+              </optgroup>
+
+              <!-- VA-API (Linux) -->
+              <optgroup label="VA-API (Linux)">
+                <option value="h264_vaapi">H.264/AVC (VAAPI)</option>
+                <option value="hevc_vaapi">H.265/HEVC (VAAPI)</option>
+                <option value="vp8_vaapi">VP8 (VAAPI)</option>
+                <option value="vp9_vaapi">VP9 (VAAPI)</option>
+                <option value="av1_vaapi">AV1 (VAAPI)</option>
+              </optgroup>
+
+              <!-- VideoToolbox (macOS) -->
+              <optgroup label="VideoToolbox (macOS)">
+                <option value="h264_videotoolbox">H.264/AVC (VideoToolbox)</option>
+                <option value="hevc_videotoolbox">H.265/HEVC (VideoToolbox)</option>
+              </optgroup>
+
+              <!-- Software Encoders -->
+              <optgroup label="Software Encoders">
+                <option value="libx264">H.264/AVC (x264)</option>
+                <option value="libx265">H.265/HEVC (x265)</option>
+                <option value="libaom-av1">AV1 (aom)</option>
+                <option value="libvpx">VP8 (vpx)</option>
+                <option value="libvpx-vp9">VP9 (vpx)</option>
+                <option value="mpeg2video">MPEG-2</option>
+                <option value="mpeg4">MPEG-4</option>
+                <option value="mjpeg">MJPEG</option>
+                <option value="png">PNG</option>
+                <option value="libwebp">WebP</option>
+              </optgroup>
+            </select>
+            <small>Choose video codec for encoding</small>
+          </div>
+          
+          <div class="option" data-param="-pix_fmt {format}">
+            <label>Pixel Format:</label>
+            <select id="pixelFormat_value" data-param-key="format">
+              <!-- 8-bit YUV Formats -->
+              <optgroup label="8-bit YUV">
+                <option value="yuv420p">YUV420P (Standard)</option>
+                <option value="yuv422p">YUV422P</option>
+                <option value="yuv444p">YUV444P</option>
+                <option value="nv12">NV12</option>
+                <option value="nv21">NV21</option>
+                <option value="yuyv422">YUYV422</option>
+              </optgroup>
+
+              <!-- 10-bit YUV Formats -->
+              <optgroup label="10-bit YUV">
+                <option value="yuv420p10le">YUV420P10LE</option>
+                <option value="yuv422p10le">YUV422P10LE</option>
+                <option value="yuv444p10le">YUV444P10LE</option>
+                <option value="p010le">P010LE</option>
+              </optgroup>
+
+              <!-- 12-bit YUV Formats -->
+              <optgroup label="12-bit YUV">
+                <option value="yuv420p12le">YUV420P12LE</option>
+                <option value="yuv422p12le">YUV422P12LE</option>
+                <option value="yuv444p12le">YUV444P12LE</option>
+              </optgroup>
+
+              <!-- RGB Formats -->
+              <optgroup label="RGB">
+                <option value="rgb24">RGB24</option>
+                <option value="rgb48le">RGB48LE (16-bit)</option>
+                <option value="rgba">RGBA</option>
+                <option value="argb">ARGB</option>
+                <option value="bgr24">BGR24</option>
+                <option value="bgra">BGRA</option>
+              </optgroup>
+
+              <!-- Hardware-specific -->
+              <optgroup label="Hardware-specific">
+                <option value="cuda">CUDA</option>
+                <option value="qsv">QSV</option>
+                <option value="d3d11">D3D11</option>
+                <option value="vaapi">VAAPI</option>
+              </optgroup>
+            </select>
+            <small>Choose pixel format for output (depends on codec support)</small>
+          </div>
+          
+          <div class="option" data-param="-bf {frames}">
+            <label>B-Frames:</label>
+            <input type="number" id="bframes_value" data-param-key="frames" 
+                   value="0" min="0" max="16" />
+            <small>Number of B-frames (0 for lowest latency)</small>
+          </div>
+        </div>
+      </div>
+      <div class="param param-group">
+        <div class="group-header">
+          <strong>Audio Settings</strong>
+          <button class="toggle-options"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="param-options">
+          <div class="option" data-param="-c:a {codec}">
+            <label>Codec:</label>
+            <select id="audioCodec_codec" data-param-key="codec">
+              <option value="copy">Copy (no transcode)</option>
+              
+              <!-- Common Lossy Formats -->
+              <optgroup label="Common Lossy Formats">
+                <option value="aac">AAC (Advanced Audio Coding)</option>
+                <option value="libfdk_aac">FDK AAC (High Quality)</option>
+                <option value="libmp3lame">MP3 (LAME)</option>
+                <option value="libvorbis">Vorbis</option>
+                <option value="libopus">Opus</option>
+              </optgroup>
+
+              <!-- Professional/Broadcast -->
+              <optgroup label="Professional/Broadcast">
+                <option value="ac3">AC3 (Dolby Digital)</option>
+                <option value="eac3">E-AC3 (Dolby Digital Plus)</option>
+                <option value="truehd">TrueHD</option>
+                <option value="mlp">MLP</option>
+              </optgroup>
+
+              <!-- Lossless Formats -->
+              <optgroup label="Lossless">
+                <option value="alac">ALAC (Apple Lossless)</option>
+                <option value="flac">FLAC</option>
+                <option value="wavpack">WavPack</option>
+                <option value="tta">TTA (True Audio)</option>
+              </optgroup>
+
+              <!-- Legacy/Compatibility -->
+              <optgroup label="Legacy/Compatibility">
+                <option value="wmav2">WMA v2</option>
+                <option value="pcm_s16le">PCM 16-bit</option>
+                <option value="pcm_s24le">PCM 24-bit</option>
+                <option value="pcm_s32le">PCM 32-bit</option>
+                <option value="pcm_f32le">PCM 32-bit Float</option>
+              </optgroup>
+
+              <!-- Speech Optimized -->
+              <optgroup label="Speech Optimized">
+                <option value="libspeex">Speex</option>
+                <option value="amrnb">AMR-NB</option>
+                <option value="amrwb">AMR-WB</option>
+                <option value="g722">G.722</option>
+                <option value="g723_1">G.723.1</option>
+              </optgroup>
+
+              <!-- Hardware Accelerated -->
+              <optgroup label="Hardware Accelerated">
+                <option value="aac_at">AAC (AudioToolbox)</option>
+                <option value="ac3_qsv">AC3 (QuickSync)</option>
+                <option value="mp2_qsv">MP2 (QuickSync)</option>
+              </optgroup>
+            </select>
+            <small>Choose audio codec for encoding</small>
+          </div>
+          
+          <div class="option" data-param="-b:a {bitrate}k">
+            <label>Bitrate:</label>
+            <input type="number" id="audioBitrate_value" data-param-key="bitrate" 
+                   value="128" min="64" max="320" />
+            <small>Audio bitrate in kilobits (64-320)</small>
+          </div>
+          
+          <div class="option" data-param="-ac {channels}">
+            <label>Channels:</label>
+            <select id="audioChannels_value" data-param-key="channels">
+              <!-- Basic Configurations -->
+              <optgroup label="Basic">
+                <option value="1">Mono (1)</option>
+                <option value="2" selected>Stereo (2)</option>
+              </optgroup>
+
+              <!-- Surround Sound -->
+              <optgroup label="Surround">
+                <option value="3">2.1 (3)</option>
+                <option value="4">Quad (4)</option>
+                <option value="5">5.0 (5)</option>
+                <option value="6">5.1 (6)</option>
+                <option value="7">6.1 (7)</option>
+                <option value="8">7.1 (8)</option>
+              </optgroup>
+
+              <!-- Advanced Configurations -->
+              <optgroup label="Advanced">
+                <option value="10">7.1.2 Atmos (10)</option>
+                <option value="12">7.1.4 Atmos (12)</option>
+                <option value="16">9.1.6 Atmos (16)</option>
+              </optgroup>
+            </select>
+            <small>Number of audio channels and configuration</small>
+          </div>
+          
+          <div class="option" data-param="-strict -2">
+            <label>Experimental Codecs</label>
+            <small>Allow experimental codecs</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="param param-group">
+        <div class="group-header">
+          <strong>Latency Settings</strong>
+          <button class="toggle-options"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="param-options">
+          <div class="option" data-param="-preset {value}">
+            <label>Preset:</label>
+            <select id="preset_value" data-param-key="value">
+              <!-- x264/x265 Presets -->
+              <optgroup label="x264/x265 Presets">
+                <option value="ultrafast">Ultrafast</option>
+                <option value="superfast">Superfast</option>
+                <option value="veryfast">Very Fast</option>
+                <option value="faster">Faster</option>
+                <option value="fast">Fast</option>
+                <option value="medium">Medium</option>
+                <option value="slow">Slow</option>
+                <option value="slower">Slower</option>
+                <option value="veryslow">Very Slow</option>
+                <option value="placebo">Placebo (Extreme)</option>
+              </optgroup>
+
+              <!-- NVIDIA NVENC Presets -->
+              <optgroup label="NVIDIA NVENC">
+                <option value="p1">P1 (Fastest)</option>
+                <option value="p2">P2</option>
+                <option value="p3">P3</option>
+                <option value="p4">P4</option>
+                <option value="p5">P5</option>
+                <option value="p6">P6</option>
+                <option value="p7">P7 (Highest Quality)</option>
+              </optgroup>
+
+              <!-- Intel QuickSync Presets -->
+              <optgroup label="Intel QuickSync">
+                <option value="veryfast">Very Fast</option>
+                <option value="faster">Faster</option>
+                <option value="fast">Fast</option>
+                <option value="medium">Medium</option>
+                <option value="slow">Slow</option>
+                <option value="slower">Slower</option>
+                <option value="quality">Quality</option>
+                <option value="llhp">Low Latency High Performance</option>
+                <option value="hp">High Performance</option>
+              </optgroup>
+
+              <!-- AMD AMF Presets -->
+              <optgroup label="AMD AMF">
+                <option value="speed">Speed</option>
+                <option value="balanced">Balanced</option>
+                <option value="quality">Quality</option>
+              </optgroup>
+
+              <!-- AV1 Presets -->
+              <optgroup label="AV1">
+                <option value="0">Level 0 (Fastest)</option>
+                <option value="4">Level 4</option>
+                <option value="8">Level 8 (Best Quality)</option>
+              </optgroup>
+            </select>
+            <small>Encoding preset (affects speed/quality trade-off)</small>
+          </div>
+          
+          <div class="option" data-param="-tune {value}">
+            <label>Tune:</label>
+            <select id="tune_value" data-param-key="value">
+              <!-- x264/x265 Tunes -->
+              <optgroup label="x264/x265">
+                <option value="film">Film</option>
+                <option value="animation">Animation</option>
+                <option value="grain">Grain</option>
+                <option value="stillimage">Still Image</option>
+                <option value="fastdecode">Fast Decode</option>
+                <option value="zerolatency">Zero Latency</option>
+                <option value="psnr">PSNR</option>
+                <option value="ssim">SSIM</option>
+              </optgroup>
+
+              <!-- NVIDIA NVENC -->
+              <optgroup label="NVIDIA NVENC">
+                <option value="hq">High Quality</option>
+                <option value="ll">Low Latency</option>
+                <option value="ull">Ultra Low Latency</option>
+                <option value="lossless">Lossless</option>
+              </optgroup>
+
+              <!-- Intel QuickSync -->
+              <optgroup label="Intel QuickSync">
+                <option value="low_latency">Low Latency</option>
+                <option value="low_power">Low Power</option>
+                <option value="high_quality">High Quality</option>
+              </optgroup>
+
+              <!-- AMD AMF -->
+              <optgroup label="AMD AMF">
+                <option value="transcoding">Transcoding</option>
+                <option value="lowlatency">Low Latency</option>
+                <option value="webcam">Webcam</option>
+              </optgroup>
+
+              <!-- VP8/VP9 -->
+              <optgroup label="VP8/VP9">
+                <option value="screen">Screen Content</option>
+                <option value="temporal">Temporal</option>
+              </optgroup>
+
+              <!-- AV1 -->
+              <optgroup label="AV1">
+                <option value="screen">Screen Content</option>
+                <option value="rtc">Real-time Communication</option>
+              </optgroup>
+            </select>
+            <small>Optimize encoder for specific content types or scenarios</small>
+          </div>
+          
+          <div class="option" data-param="-rc {mode}">
+            <label>Rate Control:</label>
+            <select id="ratecontrol_value" data-param-key="mode">
+              <!-- Common Modes -->
+              <optgroup label="Common">
+                <option value="cbr">Constant Bitrate (CBR)</option>
+                <option value="vbr">Variable Bitrate (VBR)</option>
+                <option value="crf">Constant Rate Factor (CRF)</option>
+                <option value="qp">Constant QP</option>
+              </optgroup>
+
+              <!-- NVIDIA NVENC -->
+              <optgroup label="NVIDIA NVENC">
+                <option value="constqp">Constant QP</option>
+                <option value="vbr">Variable Bitrate</option>
+                <option value="cbr">Constant Bitrate</option>
+                <option value="vbr_hq">VBR High Quality</option>
+                <option value="cbr_hq">CBR High Quality</option>
+                <option value="vbr_minqp">VBR with MinQP</option>
+              </optgroup>
+
+              <!-- Intel QuickSync -->
+              <optgroup label="Intel QuickSync">
+                <option value="icq">Intelligent Constant Quality</option>
+                <option value="la_icq">Looking Ahead ICQ</option>
+                <option value="la_vbr">Looking Ahead VBR</option>
+                <option value="la_cbr">Looking Ahead CBR</option>
+                <option value="qvbr">Quality VBR</option>
+              </optgroup>
+
+              <!-- AMD AMF -->
+              <optgroup label="AMD AMF">
+                <option value="cqp">Constant QP</option>
+                <option value="vbr_peak">Peak Constrained VBR</option>
+                <option value="vbr_latency">Low Latency VBR</option>
+                <option value="cbr_ld">Low Delay CBR</option>
+              </optgroup>
+
+              <!-- Software x264/x265 -->
+              <optgroup label="Software x264/x265">
+                <option value="abr">Average Bitrate</option>
+                <option value="crf">Constant Rate Factor</option>
+                <option value="crf_max">CRF with Max Bitrate</option>
+                <option value="qp">Constant Quantizer</option>
+              </optgroup>
+            </select>
+            <small>Bitrate/quality control method (varies by encoder)</small>
+          </div>
+          
+          <div class="option" data-param="-multipass {mode}">
+            <label>Multipass:</label>
+            <select id="multipass_value" data-param-key="mode">
+              <optgroup label="Common">
+                <option value="disabled">Disabled (Single Pass)</option>
+                <option value="2">Two-Pass</option>
+              </optgroup>
+
+              <!-- x264/x265 -->
+              <optgroup label="x264/x265">
+                <option value="1">First Pass</option>
+                <option value="2">Second Pass</option>
+                <option value="3">Third Pass</option>
+                <option value="auto">Auto (Recommended)</option>
+              </optgroup>
+
+              <!-- NVIDIA NVENC -->
+              <optgroup label="NVIDIA NVENC">
+                <option value="qres">Quarter Resolution</option>
+                <option value="fullres">Full Resolution</option>
+                <option value="disabled">Single Pass</option>
+              </optgroup>
+
+              <!-- Intel QuickSync -->
+              <optgroup label="Intel QuickSync">
+                <option value="qp">Quality-based</option>
+                <option value="fr">Full Rate</option>
+                <option value="gen">Generic</option>
+              </optgroup>
+
+              <!-- AMD AMF -->
+              <optgroup label="AMD AMF">
+                <option value="quality">Quality Mode</option>
+                <option value="balanced">Balanced</option>
+                <option value="speed">Speed Mode</option>
+              </optgroup>
+
+              <!-- VP8/VP9 -->
+              <optgroup label="VP8/VP9">
+                <option value="firstpass">First Pass</option>
+                <option value="lastpass">Last Pass</option>
+                <option value="auto-alt">Auto Alt-Ref</option>
+              </optgroup>
+            </select>
+            <small>Multipass encoding mode (improves quality at cost of speed)</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="param param-group"></div>
+        <div class="group-header">
+          <strong>Output Flags</strong>
+          <button class="toggle-options"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="param-options">
+          <div class="option" data-param="-movflags {flags}">
+            <label>MOV Flags:</label>
+            <small>Container-specific optimization flags</small>
+            <select multiple id="movflags_value" data-param-key="flags" class="form-select">
+              <option value="+faststart">Faststart</option>
+              <option value="+frag_keyframe">Fragment Keyframe</option>
+              <option value="+empty_moov">Empty MOOV</option>
+              <option value="+dash">DASH</option>
+              <option value="+cmaf">CMAF</option>
+            </select>
+          </div>
+          
+          <div class="option" data-param="-fflags {flags}">
+            <label>Format Flags:</label>
+            <small>Format processing flags</small>
+            <select multiple id="fflags_value" data-param-key="flags" class="form-select">
+              <option value="+genpts">Generate PTS</option>
+              <option value="+igndts">Ignore DTS</option>
+              <option value="+discardcorrupt">Discard Corrupt</option>
+              <option value="+nobuffer">No Buffer</option>
+            </select>
+          </div>
+          
+          <div class="option" data-param="-timeout {microseconds}">
+            <label>Timeout (µs):</label>
+            <input type="number" id="timeout_value" data-param-key="microseconds" 
+                   value="7000000" min="0" />
+            <small>I/O operation timeout</small>
+          </div>
+
+          <div class="option" data-param="-muxdelay {delay}">
+            <label>Mux Delay:</label>
+            <input type="number" id="muxdelay_value" data-param-key="delay" 
+                   value="0.001" step="0.001" min="0" />
+            <small>Muxing delay in seconds</small>
+          </div>
+          
+          <div class="option" data-param="-copyts">
+            <label>Copy Timestamps</label>
+            <small>Copy timestamps from input</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  <!-- end of main container -->
+
+  <div class="floating-output card bg-dark-subtle">
+    <div class="card-body">
+      <h2 class="h5 card-title">Generated Command</h2>
+      <pre id="commandOutput" class="bg-dark p-3 rounded" title="Click to copy"></pre>
+      <p class="text-muted small mt-2 mb-0">
+        <i class="fas fa-info-circle"></i> Click command to copy to clipboard
+      </p>
+    </div>
+  </div>
+  
+  <div id="copyNotification" class="copy-notification">
+    Command copied to clipboard!
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

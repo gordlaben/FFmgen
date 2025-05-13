@@ -1,0 +1,804 @@
+:root {
+    --primary-color: #03a9f4;       /* Main blue */
+    --primary-hover: #0288d1;       /* Darker blue */
+    --primary-light: #4fc3f7;       /* Lighter blue */
+    --primary-shadow: rgba(3, 169, 244, 0.2);  /* Blue shadow */
+    --bs-body-bg: #1a1a1a;
+    --bs-body-color: #e0e0e0;
+    --bs-dark-rgb: 26, 26, 26;
+}
+
+/* Base styles */
+body {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    padding: 20px;
+    margin: 0;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6,
+.group-header strong,
+.option label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.display-5 {
+    letter-spacing: -0.03em;
+}
+
+/* Description section */
+.description {
+    margin: 0;
+}
+
+.description .lead {
+    font-size: .9rem;
+    line-height: 1.4;
+    margin: 0;
+    opacity: 1;
+    color: #888 !important;
+}
+
+/* Layout containers */
+.container {
+    max-width: 800px;
+    margin: auto auto 200px;
+    background-color: #242424;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.section {
+    margin-top: 40px;
+    position: relative;
+}
+
+.section + .section {
+    padding-top: 35px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section h2 {
+    margin-bottom: 25px;
+}
+
+/* Group header styling */
+.group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #444;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group-header.active {
+    background: rgba(3, 169, 244, 0.1);
+    border-color: var(--primary-color);
+}
+
+.group-header:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.group-header strong {
+    font-size: 1.2em;
+    color: #fff;
+}
+
+.card-title {
+    margin-bottom: var(--bs-card-title-spacer-y);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Toggle button */
+.toggle-options {
+    background: rgba(3, 169, 244, 0.1);
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.8;
+}
+
+.toggle-options:hover {
+    background: rgba(3, 169, 244, 0.2);
+    transform: translateY(-2px);
+    opacity: 1;
+}
+
+.toggle-options.active {
+    transform: rotate(180deg);
+    background: rgba(3, 169, 244, 0.3);
+}
+
+.toggle-options i {
+    transition: transform 0.3s ease;
+}
+
+.toggle-options.active i {
+    transform: rotate(45deg);
+}
+
+/* Options styling */
+.param-options {
+    display: none;
+    margin-top: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.param-options.visible {
+    display: block;
+}
+
+/* Option item styling */
+.option {
+    position: relative;
+    padding: 15px;
+    background: rgba(42, 42, 42, 0.5);
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: rgba(42, 42, 42, 0.8);
+}
+
+.option.option-added {
+    border-color: var(--primary-color);
+    background: rgba(3, 169, 244, 0.1);
+}
+
+/* Remove option-controls related styles */
+.option-controls {
+    display: none;
+}
+
+.option label {
+    margin: 0 0 2px 0;  /* Reduced bottom margin */
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.option small {
+    color: #888;
+    font-size: 0.9em;
+    margin: 0 0 8px 0;  /* Reduced top margin */
+}
+
+.option select,
+.option input[type="number"],
+.option input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+}
+
+.option:last-child {
+    border-bottom: none;
+}
+
+/* Enhanced Select Styling */
+.option select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: #2a2a2a;
+    padding: 8px 32px 8px 12px;
+    border: 2px solid #444;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+/* Add dropdown arrow indicator */
+.option select:not([multiple]) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2303a9f4'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+    padding-right: 32px;
+}
+
+/* Custom dropdown arrow using Font Awesome */
+.option select:not([multiple]) {
+    position: relative;
+}
+
+.option select:not([multiple])::after {
+    content: '\f078';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    pointer-events: none;
+}
+
+.option select:hover {
+    border-color: var(--primary-color);
+}
+
+.option select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-shadow);
+}
+
+.option select[multiple] {
+    padding: 8px;
+    height: auto;
+    min-height: 95px;
+    max-height: 200px;
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-radius: 6px;
+    color: #fff;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 8px;
+    overflow-y: auto;
+}
+
+.option select[multiple]:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-shadow);
+}
+
+.option select[multiple] option {
+    padding: 8px;
+    border-radius: 4px;
+    margin: 2px 0;
+}
+
+.option select[multiple] option:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Multiple Select Styling */
+.option select[multiple] {
+    padding: 8px;
+    height: auto;
+    min-height: 120px;
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-radius: 6px;
+    color: #fff;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 8px;
+}
+
+.option select[multiple] option {
+    padding: 8px;
+    margin: 2px 0;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.option select[multiple] option:checked {
+    background: var(--primary-color);
+    color: white;
+}
+
+.option select[multiple] option:hover {
+    background-color: rgba(3, 169, 244, 0.2);
+}
+
+/* Number Input Styling */
+.option input[type="number"] {
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-radius: 6px;
+    color: #fff;
+    padding: 8px 12px;
+    transition: all 0.2s ease;
+}
+
+.option input[type="number"]:hover {
+    border-color: var(--primary-color);
+}
+
+.option input[type="number"]:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-shadow);
+}
+
+/* Text Input Styling */
+.option input[type="text"] {
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-radius: 6px;
+    color: #fff;
+    padding: 8px 12px;
+    transition: all 0.2s ease;
+}
+
+.option input[type="text"]:hover {
+    border-color: var(--primary-color);
+}
+
+.option input[type="text"]:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-shadow);
+}
+
+/* Enhanced Option Layout */
+.option {
+    position: relative;
+    padding: 15px;
+    background: rgba(42, 42, 42, 0.5);
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.option.option-added {
+    border-color: var(--primary-color);
+    background: rgba(3, 169, 244, 0.1);
+}
+
+.option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: rgba(42, 42, 42, 0.8);
+}
+
+/* Update the margin-left to remove checkbox space */
+.option label,
+.option small,
+.option select,
+.option input[type="number"],
+.option input[type="text"] {
+    margin-left: 0;
+}
+
+/* Parameter Group Headers */
+.group-header {
+    padding: 12px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    margin-top: 15px;
+    border: 1px solid #444;
+}
+
+.group-header strong {
+    font-size: 1rem;
+    color: #fff;
+}
+
+.toggle-options {
+    padding: 4px 8px;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.toggle-options:hover {
+    opacity: 1;
+    background: rgba(3, 169, 244, 0.1);
+    border-radius: 4px;
+}
+
+/* Parameter Options Container */
+.param-options {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* ScrollBar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Custom dark theme enhancements */
+:root {
+    --bs-body-bg: #1a1a1a;
+    --bs-body-color: #e0e0e0;
+    --bs-dark-rgb: 26, 26, 26;
+}
+
+.group-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.group-header:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Option styling */
+.option {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+/* Custom form controls */
+.form-check-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.form-select, .form-control {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--bs-body-color);
+}
+
+.form-select:focus, .form-control:focus {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem var(--primary-shadow);
+}
+
+/* Floating output */
+.floating-output {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 90%;
+    max-width: 800px;
+    z-index: 1000;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background-color: #2a2a2a !important;
+    border: 1px solid #444;
+}
+
+.floating-output pre {
+    max-height: 100px;
+    overflow-y: auto;
+    margin: 0;
+    color: var(--bs-body-color);
+    cursor: pointer;
+    position: relative;
+    padding: 1rem;
+    transition: all 0.2s ease;
+    background-color: #242424;
+}
+
+.floating-output pre:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.floating-output .card-body {
+    background-color: #2a2a2a;
+    border-radius: 8px;
+}
+
+/* Copy notification */
+.copy-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1100;
+}
+
+.copy-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .floating-output {
+        width: calc(100% - 2rem);
+        right: 1rem;
+        bottom: 1rem;
+    }
+}
+
+/* Toggle button styling */
+.toggle-options {
+    background: rgba(3, 169, 244, 0.1);
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-options:hover {
+    background: rgba(3, 169, 244, 0.2);
+    transform: translateY(-2px);
+}
+
+.toggle-options.active {
+    transform: rotate(180deg);
+    background: rgba(3, 169, 244, 0.3);
+}
+
+.toggle-options i {
+    transition: transform 0.3s ease;
+}
+
+.toggle-options.active i {
+    transform: rotate(45deg);
+}
+
+/* Enhanced hover effects for options */
+.option {
+    transform: translateY(0);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: rgba(42, 42, 42, 0.9);
+}
+
+/* Group header hover effect */
+.group-header {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group-header:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Typography adjustments for Poppins */
+h1, h2, h3, h4, h5, h6,
+.group-header strong,
+.option label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.display-5 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+}
+
+.group-header strong {
+    font-weight: 600;
+}
+
+.option label {
+    font-weight: 600;
+}
+
+/* Regular weight for descriptions and inputs */
+.option small,
+input,
+select,
+.form-control,
+.form-select,
+::placeholder,
+.option input[type="number"],
+.option input[type="text"] {
+    font-weight: 400;
+}
+
+/* Sub-options styling */
+.sub-options {
+    margin-left: 35px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #e0e0e0;
+    font-weight: 400;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.checkbox-label:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Override the hidden checkbox styling for flag checkboxes */
+.flag-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px !important;
+    height: 18px !important;
+    border: 2px solid #555;
+    border-radius: 4px;
+    background: #2a2a2a;
+    cursor: pointer;
+    position: relative !important;
+    opacity: 1 !important;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.flag-checkbox:checked {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.flag-checkbox:checked::after {
+    content: "✓";
+    color: white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+}
+
+.flag-checkbox:hover {
+    border-color: var(--primary-color);
+}
+
+/* Remove these overrides */
+.option:has(.sub-options) {
+    cursor: pointer;  /* Restore cursor */
+}
+
+.option:has(.sub-options):hover {
+    transform: translateY(-2px);  /* Restore hover effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: rgba(42, 42, 42, 0.8);
+    border-color: #555;
+}
+
+.option:has(.sub-options)::before {
+    display: block;  /* Restore checkbox */
+}
+
+/* Ensure sub-options don't trigger parent hover effects */
+.sub-options {
+    pointer-events: auto;
+}
+
+/* Parameter control buttons */
+.option-controls {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    display: flex;
+    gap: 8px;
+}
+
+.btn-add {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-remove {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-update {
+    background-color: #ffc107;
+    color: black;
+}
+
+.option-added {
+    border-color: var(--primary-color);
+    background: rgba(3, 169, 244, 0.1);
+}
+
+.description .lead {
+    font-size: .9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    margin: 0;
+    opacity: 1;
+    color: #888!important;
+}
+
+/* Remove these styles */
+.info-icon,
+[data-tooltip],
+[data-tooltip]:before,
+[data-tooltip]:hover:before,
+.d-flex.align-items-center {
+    display: none;
+}
